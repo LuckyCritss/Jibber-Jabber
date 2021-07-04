@@ -1,44 +1,50 @@
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jibber Jabber</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link href="login.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
 </head>
 <body class="text-center">
-    <main class="form-signin">
-        <form action="/login" method="post"><input type="hidden" name="_csrf" value="4da5e757-6e19-4ef4-9547-bd3cbe5f618c">
-            <h1 class="h3 mb-3 fw-normal">Create account</h1>
-            <input type="hidden" id="id" name="id" value="0">
 
-            <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" value="">
-                <label>Email address</label>
-            </div>
+<main class="form-signin">
+    <form action="#" th:action="@{/register}" th:object="${user}" method="post">
+        <h1 class="h3 mb-3 fw-normal">Create account</h1>
+
+        <input type="hidden"  th:field="*{id}">
+
+        <div class="mb-1 alert alert-danger" role="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" th:field="*{email}" >
+            <label>Email address or Handle</label>
+        </div>
+
+        <div class="mb-1 mt-2 alert alert-danger" role="alert" th:if="${#fields.hasErrors('handle')}" th:errors="*{handle}"></div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="handle" placeholder="Handle" th:field="*{handle}">
+            <label for="handle">Handle</label>
+        </div>
+
+        <div class="mb-1 mt-2 alert alert-danger" role="alert" th:if="${#fields.hasErrors('passWord')}" th:errors="*{passWord}"></div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" th:field="*{passWord}" >
+            <label>Password</label>
+        </div>
+
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword2" placeholder="Password" th:field="*{checkPassWord}">
+            <label>Retype Password</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Create account</button>
+        <p class="mt-3 text-muted">
+            <a th:href="@{/login}" href="#">Login with your existing account</a></p>
+    </form>
+</main>
 
 
-            <div class="form-floating">
-                <input type="text" class="form-control" id="handle" placeholder="Handle" name="handle" value="">
-                <label for="handle">Handle</label>
-            </div>
 
-
-            <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="passWord" value="">
-                <label>Password</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword2" placeholder="Password" name="checkPassWord" value="">
-                <label>Retype Password</label>
-            </div>
-
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Create account</button>
-            <p class="mt-3 text-muted">
-                <a href="/login">Login with your existing account</a>
-            </p>
-        </form>
-    </main>
 </body>
 </html>
