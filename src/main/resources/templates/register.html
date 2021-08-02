@@ -8,26 +8,25 @@
     <link href="/css/login.css" rel="stylesheet">
 </head>
 <body class="text-center">
-
 <main class="form-signin">
     <form action="#" th:action="@{/register}" th:object="${user}" method="post">
         <h1 class="h3 mb-3 fw-normal">Create account</h1>
 
         <input type="hidden"  th:field="*{id}">
 
-        <div class="mb-1 alert alert-danger" role="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" th:field="*{email}" >
-            <label>Email address or Handle</label>
+            <label>Email address</label>
         </div>
 
-        <div class="mb-1 mt-2 alert alert-danger" role="alert" th:if="${#fields.hasErrors('handle')}" th:errors="*{handle}"></div>
+        <div class=" alert alert-danger" role="alert" th:if="${#fields.hasErrors('handle')}" th:errors="*{handle}"></div>
         <div class="form-floating">
             <input type="text" class="form-control" id="handle" placeholder="Handle" th:field="*{handle}">
             <label for="handle">Handle</label>
         </div>
 
-        <div class="mb-1 mt-2 alert alert-danger" role="alert" th:if="${#fields.hasErrors('passWord')}" th:errors="*{passWord}"></div>
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('passWord')}" th:errors="*{passWord}"></div>
         <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" th:field="*{passWord}" >
             <label>Password</label>

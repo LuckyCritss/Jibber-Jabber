@@ -6,13 +6,22 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
 import javax.sql.DataSource;
+import java.util.Date;
 
 @Configuration
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private DataSource dataSource;
@@ -20,6 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
@@ -41,18 +55,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**").permitAll()
-                .antMatchers("/signup").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/register").permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/")
                 .defaultSuccessUrl("/home")
                 .permitAll();
-    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
@@ -60,4 +71,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 }
