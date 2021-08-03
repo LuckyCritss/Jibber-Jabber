@@ -34,14 +34,14 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @GetMapping("/register")
+    @GetMapping
     public String add(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public String processForm(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "register";

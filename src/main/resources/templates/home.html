@@ -20,12 +20,12 @@
                 </a>
                 <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center justify-content-between w-100 px-3 align-items-center">
                     <li class="nav-item">
-                        <a  class="nav-link py-3 px-2"> <!-- Thymeleaf Link to /home-->
+                        <a th:href="@{/home}" class="nav-link py-3 px-2"> <!-- Thymeleaf Link to /home-->
                             <i class="bi-house fs-1"></i>
                         </a>
                     </li>
                     <li> <!-- Only show for logged in users-->
-                        <a class="nav-link py-3 px-2"> <!-- Thymeleaf Link to <handle>-->
+                        <a th:href="@{/users/${handle}}" class="nav-link py-3 px-2"> <!-- Thymeleaf Link to <handle>-->
                             <i class="bi-person fs-1"></i>
                         </a>
                     </li>

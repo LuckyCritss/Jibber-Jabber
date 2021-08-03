@@ -14,8 +14,10 @@ public interface UserService {
         }
     }
 
+    User findUser(String needle);
+
     List<User> getAll();
 
-    public void save(User user) throws PasswordMisMatchException;
+    void save(User user) throws PasswordMisMatchException;
 
 }
