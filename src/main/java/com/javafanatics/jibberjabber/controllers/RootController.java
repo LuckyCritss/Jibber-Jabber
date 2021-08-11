@@ -34,8 +34,6 @@ public class RootController {
         return("login");
     }
 
-
-
     public void authWithAuthManager(HttpServletRequest request, String username, String password) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
         authToken.setDetails(new WebAuthenticationDetails(request));

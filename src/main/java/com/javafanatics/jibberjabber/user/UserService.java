@@ -31,6 +31,7 @@ public interface UserService {
     void unFollow(String userHandle,String unFollowHandle);
 
     Set<User > getUsersIFollow(String handle);
+
     List<User> getUsersToFollow(String handle, Set<User> usersIFollow);
 
     void save(User user) throws PasswordException, PasswordMisMatchException;
