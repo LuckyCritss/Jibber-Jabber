@@ -1,31 +1,54 @@
 package com.javafanatics.jibberjabber.controllers;
 
+import com.javafanatics.jibberjabber.jibber.Jibber;
 import com.javafanatics.jibberjabber.jibber.JibberService;
-import com.javafanatics.jibberjabber.jibber.Jibbers;
+import com.javafanatics.jibberjabber.notification.NotificationService;
+import com.javafanatics.jibberjabber.user.User;
+import com.javafanatics.jibberjabber.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
+@RequestMapping("/jibber")
 public class JibberController {
 
-
+    private UserService userService;
     private JibberService jibberService;
+    private NotificationService notificationService;
 
     @Autowired
-    public void setJibberService(JibberService jibberService){
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setNotificationService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    @Autowired
+    public void setJibberService(JibberService jibberService) {
         this.jibberService = jibberService;
     }
 
-    @GetMapping("/Jibbers")
-    public String showAllJibber (Model model){
-        model.addAttribute("Jibbers", jibberService.getAll());
-        return "jibbers";
-    }
+    @PostMapping("/post")
+    public String postJibber(@Valid @ModelAttribute Jibber jibber, BindingResult bindingResult, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/home";
+        }
 
-    public String createJibberTweet (Model model){
-        model.addAttribute("Jibbers", new Jibbers());
-        return "/jibbers/edit";
+        User user = userService .getUserByHandle(principal.getName());
+        jibber.setUser(user);
+        jibberService.save(jibber);
+        notificationService.sendNotification(user);
+
+        return "redirect:/home";
     }
 }

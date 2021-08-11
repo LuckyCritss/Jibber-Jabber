@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="jibber-feed" th:fragment="jibberfeed">
+<div class="jibber-container mb-3 p-3 border bg-light" th:each="jibber : ${jibbers}">
+  <div class="avatar-container">
+    <img class="responsive-img" th:with="baseUrl=('https://www.gravatar.com/avatar/')"
+         th:src="@{${baseUrl}} + ${jibber.user.getUserEmailMD5()} + '?d=robohash'" th:alt="${jibber.user.handle}">
+  </div>
+  <div class="jibber-message">
+    <div class="jibber-header mb-2">
+      <span class="jibber-header-handle" th:text="'@' + *{jibber.user.handle}"></span>
+      at
+      <span class="jibber-header-date" th:text="${#dates.format(jibber.createdDate, 'dd-MM-yyyy')}"></span>
+    </div>
+    <div class="jibber-message" th:text="${#strings.replace(jibber.message, T(System).getProperty('line.separator'), '&lt;br /&gt;')}"></div>
+  </div>
+</div>
+</div>
+</body>
+</html>

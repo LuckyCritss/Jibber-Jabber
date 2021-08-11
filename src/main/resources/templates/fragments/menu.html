@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-sm-auto bg-light sticky-top" th:fragment="menu">
+  <div class="d-flex flex-sm-column flex-row flex-nowrap bg-light align-items-center sticky-top">
+    <a href="/" class="d-block p-3 link-dark text-decoration-none">
+      <i class="bi-chat-text fs-1"></i>
+    </a>
+    <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center justify-content-between w-100 px-3 align-items-center">
+      <li class="nav-item">
+        <a th:href="@{/home}" class="nav-link py-3 px-2">
+          <i class="bi-house fs-1"></i>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{'/' + ${user.handle} }" class="nav-link py-3 px-2">
+          <i class="bi-person fs-1"></i>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/users }" class="nav-link py-3 px-2" >
+          <i class="bi-people fs-1"></i>
+        </a>
+      </li>
+      <li sec:authorize="isAuthenticated()">
+        <a href="javascript: document.logoutForm.submit()" class="nav-link py-3 px-2" >
+          <i class="bi-box-arrow-left fs-1"></i>
+        </a>
+        <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+          <input type="submit" value="Logout" />
+        </form>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+</body>
+</html>

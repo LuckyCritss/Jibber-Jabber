@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="jibber-users" th:fragment="users (users, action)">
+<div class="user-container mb-3 p-3 border bg-light" th:each="aUser : ${users}">
+  <div class="avatar-container">
+    <img class="responsive-img" th:with="baseUrl=('https://www.gravatar.com/avatar/')"
+         th:src="@{${baseUrl}} + ${aUser.getUserEmailMD5()} + '?d=robohash'" th:alt="${aUser.handle}">
+  </div>
+  <div class="jibber-user-name">
+      <span class="jibber-header-handle" th:text="'@' + ${aUser.handle}"></span>
+  </div>
+  <div class="jibber-user-action">
+    <form th:action="@{/user/} + ${action}" method="post">
+      <input type="hidden" th:name="handle" th:value="${aUser.handle}">
+      <input th:if="${action} =='follow'" class="btn btn-primary float-end" type="submit" value="Follow">
+      <input th:if="${action} =='unfollow'" class="btn btn-warning float-end" type="submit" value="Unfollow">
+    </form>
+  </div>
+</div>
+</div>
+</body>
+</html>

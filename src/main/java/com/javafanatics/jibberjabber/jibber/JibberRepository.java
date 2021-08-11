@@ -1,24 +1,15 @@
 package com.javafanatics.jibberjabber.jibber;
-
-import com.javafanatics.jibberjabber.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-@Repository
-public interface JibberRepository extends JpaRepository<Jibbers, Integer> {
+public interface JibberRepository extends JpaRepository<Jibber, Integer> {
 
+    @Query("from Jibber t join fetch User u on t.user = u where u.handle = :handle order by t.createdDate desc")
+    List<Jibber> findByHandle(String handle);
 
-    @Override
-    @Query("SELECT t from Jibbers t")
-    List<Jibbers>findAll();
-
-    default User getUserById(int userId) {
-        return getUserById(userId);
-    }
-
-    default void saveAll(Jibbers jibberTweet) {
-    }
+    @Query("from Jibber t join fetch User u on t.user = u where u.handle IN (:handles) order by t.createdDate desc")
+    List<Jibber> findByHandle(@Param("handles") List<String> handle);
 }

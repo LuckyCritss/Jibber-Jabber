@@ -2,24 +2,13 @@ package com.javafanatics.jibberjabber.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-import java.util.List;
 
-
-@Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    User findUserByHandle(String handle);
 
-    @Query("SELECT u from User u Where u.handle = :handle")
-    public User getUserByHandle(@Param("handle") String handle);
-
-    @Query("SELECT u from User u Where u.email = :email")
-    public User getUserByEmail (@Param("email") String email);
-
-    @Override
-    @Query("SELECT u from User u")
-    List<User> findAll();
-
-    User getUserById (Integer integer);
-
+    @Query("from User u " +
+            "left join fetch u.followers " +
+            "left join fetch u.following " +
+            "where u.handle = :handle")
+    User getUserComplete(String handle);
 }

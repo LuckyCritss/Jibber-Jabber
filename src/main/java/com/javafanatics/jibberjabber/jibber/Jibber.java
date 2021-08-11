@@ -4,27 +4,34 @@ import com.javafanatics.jibberjabber.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "jibbers")
-public class Jibbers {
+public class Jibber {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    @NotBlank(message = "{user.email}")
+    private String message;
 
     @CreationTimestamp
-    @Column (name = "created_date")
-    private Date createDate;
+    @Column(name = "created_date")
+    private Date createdDate;
 
-    @Column(length = 300)
-    private String message;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_jibber_id")
+    private Jibber parentJibber;
+
 }
