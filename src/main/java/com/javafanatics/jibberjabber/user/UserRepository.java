@@ -12,6 +12,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "where u.handle = :handle")
     User getUserComplete(String handle);
 
-    @Query("select distinct User from User")
+    @Query("from User u " +
+            "left join fetch u.followers " +
+            "left join fetch u.following ")
     User getAll();
 }

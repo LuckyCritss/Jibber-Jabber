@@ -1,5 +1,6 @@
 package com.javafanatics.jibberjabber.jibber;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,8 @@ public interface JibberRepository extends JpaRepository<Jibber, Integer> {
     @Query("from Jibber t join fetch User u on t.user = u where u.handle IN (:handles) order by t.createdDate desc")
     List<Jibber> findByHandle(@Param("handles") List<String> handle);
 
+    @NotNull
+    @Override
     @Query("from Jibber t join fetch User u on t.user = u order by t.createdDate desc")
     List<Jibber> findAll();
 
