@@ -10,6 +10,10 @@ public interface JibberService {
 
     List<Jibber> findByHandle(String handle);
 
+    List<Jibber> findByid(int id);
+
+    List<Jibber> findAll();
+
     List<Jibber> getFeedForUser(User user);
 
 }

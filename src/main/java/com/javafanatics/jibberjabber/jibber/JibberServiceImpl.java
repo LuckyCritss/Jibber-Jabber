@@ -49,4 +49,14 @@ public class JibberServiceImpl implements JibberService {
         List<Jibber> jibbers = jibberRepository.findByHandle(handle);
         return jibbers;
     }
+
+    @Override
+    public List<Jibber> findByid(int id) {
+        return jibberRepository.findByid(id);
+    }
+
+    @Override
+    public List<Jibber> findAll() {
+        return jibberRepository.findAll();
+    }
 }

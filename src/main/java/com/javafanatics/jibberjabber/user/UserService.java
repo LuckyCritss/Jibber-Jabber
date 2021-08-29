@@ -26,6 +26,8 @@ public interface UserService {
     @PreAuthorize("isAuthenticated()")
     User getUserComplete(String handle);
 
+    User getAll();
+
     void follow(String userHandle,String toFollowHandle);
 
     void unFollow(String userHandle,String unFollowHandle);
