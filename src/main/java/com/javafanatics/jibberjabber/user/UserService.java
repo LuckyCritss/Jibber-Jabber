@@ -28,6 +28,8 @@ public interface UserService {
 
     User getAll();
 
+    List<User> getAllUsers();
+
     void follow(String userHandle,String toFollowHandle);
 
     void unFollow(String userHandle,String unFollowHandle);

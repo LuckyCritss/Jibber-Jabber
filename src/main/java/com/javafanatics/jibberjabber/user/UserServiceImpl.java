@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        return userRepository.getAllUsers();
+    }
+
+    @Override
     public void follow(String userHandle, String toFollowHandle) {
         User user = getUserComplete(userHandle);
         User toFollow = getUserByHandle(toFollowHandle);
